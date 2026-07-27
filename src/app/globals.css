@@ -1,26 +1,153 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ *
+ * Palette — Harbor Blue / Cargo Khaki / Steel
+ * These are the fixed brand reference scales (identical in both themes).
+ * ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary — Harbor Blue */
+  --harbor-900: #0e2536;
+  --harbor-700: #1c4a66;
+  --harbor-500: #2e7096;
+  --harbor-300: #8fb4c7;
+  --harbor-100: #dceaf0;
+
+  /* Secondary — Cargo Khaki */
+  --cargo-700: #7c6a3f;
+  --cargo-500: #b99f6b;
+  --cargo-300: #dcc9a0;
+  --cargo-100: #f0e6d2;
+
+  /* Neutral — Steel */
+  --steel-900: #16232c;
+  --steel-700: #47575f;
+  --steel-400: #8b9aa1;
+  --steel-200: #d7dee0;
+  --steel-50: #f7f8f6;
+
+  /* Status — shipment tracking states */
+  --status-transit: #2e7096;
+  --status-delivered: #2e7d5c;
+  --status-delayed: #c6862c;
+  --status-exception: #b34a3b;
+
+  /* ---- Semantic tokens (theme-aware) — light ---- */
+  --background: #f4f6f5;
+  --foreground: #16232c;
+  --card: #ffffff;
+  --card-foreground: #16232c;
+  --muted: #eaeeec;
+  --muted-foreground: #5c6c74;
+  --border: #dde3e0;
+  --ring: #2e7096;
+
+  --accent: var(--harbor-700);
+  --accent-foreground: #f5f6f4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0d151a;
+    --foreground: #e9edec;
+    --card: #16242c;
+    --card-foreground: #e9edec;
+    --muted: #1b2b33;
+    --muted-foreground: #93a3a9;
+    --border: #263840;
+    --ring: #8fb4c7;
+
+    --accent: var(--harbor-300);
+    --accent-foreground: #0d151a;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-harbor-900: var(--harbor-900);
+  --color-harbor-700: var(--harbor-700);
+  --color-harbor-500: var(--harbor-500);
+  --color-harbor-300: var(--harbor-300);
+  --color-harbor-100: var(--harbor-100);
+
+  --color-cargo-700: var(--cargo-700);
+  --color-cargo-500: var(--cargo-500);
+  --color-cargo-300: var(--cargo-300);
+  --color-cargo-100: var(--cargo-100);
+
+  --color-steel-900: var(--steel-900);
+  --color-steel-700: var(--steel-700);
+  --color-steel-400: var(--steel-400);
+  --color-steel-200: var(--steel-200);
+  --color-steel-50: var(--steel-50);
+
+  --color-status-transit: var(--status-transit);
+  --color-status-delivered: var(--status-delivered);
+  --color-status-delayed: var(--status-delayed);
+  --color-status-exception: var(--status-exception);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Motion primitives */
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
   }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero canvas — a faint route grid with a harbor glow, evoking a map surface */
+.hero-canvas {
+  background-color: var(--muted);
+  background-image:
+    radial-gradient(115% 115% at 85% 8%, rgba(46, 112, 150, 0.16), transparent 52%),
+    radial-gradient(color-mix(in srgb, var(--muted-foreground) 22%, transparent) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    22px 22px;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
